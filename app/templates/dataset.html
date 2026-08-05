@@ -1,24 +1,74 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container my-4">
-    <h2>Dataset Overview</h2>
 
-    <div class="row my-3">
-        <div class="col-md-4">
-            <p><strong>Total Rows:</strong> {{ summary.rows }}</p>
-        </div>
-        <div class="col-md-4">
-            <p><strong>Total Columns:</strong> {{ summary.columns }}</p>
-        </div>
-        <div class="col-md-4">
-            <p><strong>Target Column:</strong> {{ summary.target }}</p>
-        </div>
-    </div>
+<section class="container">
 
-    <h3>First Few Rows</h3>
-    <div class="table-responsive">
-        {{ first_rows | safe }}
-    </div>
-</div>
+    <h2>📂 Load Dataset</h2>
+
+    <p>
+        This page loads the Placement Prediction dataset used for training
+        and testing the machine learning models.
+    </p>
+
+    <hr>
+
+    <h3>Dataset Information</h3>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Attribute</th>
+            <th>Description</th>
+        </tr>
+
+        {% for column in columns %}
+        <tr>
+            <td>{{ column }}</td>
+            <td>Feature in the dataset</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <h3>Dataset Shape</h3>
+
+    <p><strong>Rows:</strong> {{ rows }}</p>
+    <p><strong>Columns:</strong> {{ cols }}</p>
+
+    <hr>
+
+    <h3>First Five Records</h3>
+
+    <table border="1" cellpadding="8">
+
+        <thead>
+            <tr>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for row in data %}
+
+            <tr>
+
+                {% for value in row %}
+                <td>{{ value }}</td>
+                {% endfor %}
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+
 {% endblock %}
