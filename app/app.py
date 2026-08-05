@@ -18,6 +18,9 @@ def dataset():
         summary=summary,
         first_rows=df.head().to_html(index=False)
     )
+@app.route("/eda")
+def eda():
+    return render_template("eda.html")
 
 
 if __name__ == "__main__":
