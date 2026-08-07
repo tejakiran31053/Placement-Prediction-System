@@ -1,50 +1,129 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f5f5f5;
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Body */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f7fb;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
 
 /* Header */
-
 header {
-    background-color: black;
+    background: linear-gradient(135deg, #2c3e50, #3498db);
     color: white;
     text-align: center;
-    padding: 15px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+header h1 {
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
 
 /* Navigation */
-
 nav {
-    background-color: #333;
-    padding: 10px;
+    margin-top: 20px;
+    background: #34495e;
+    padding: 15px;
+    border-radius: 8px;
     text-align: center;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    margin: 10px;
+    padding: 10px 18px;
+    margin: 0 8px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 nav a:hover {
-    color: yellow;
+    background: #3498db;
+    color: white;
 }
 
-
-/* Content */
-
+/* Content Card */
 div {
-    background-color: white;
-    padding: 20px;
+    background: white;
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    border-left: 5px solid #3498db;
+    padding-left: 10px;
+}
+
+/* Paragraphs */
+p {
+    margin-bottom: 12px;
+    color: #555;
+}
+
+/* Buttons */
+button {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
+table th,
+table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
 
-/* Headings */
+table th {
+    background: #3498db;
+    color: white;
+}
 
-h2 {
-    color: #2c3e50;
+table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+table tr:hover {
+    background: #eef6ff;
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
 }
