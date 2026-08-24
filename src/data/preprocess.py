@@ -16,7 +16,7 @@ def split_data(df):
     )
 
     return X_train, X_test, y_train, y_test
-
+#
 def handle_missing_values(X_train, X_test, numerical_features):
     imputer = SimpleImputer(strategy="median")
     X_train = X_train.copy()
