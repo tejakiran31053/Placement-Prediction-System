@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container">
+
+    <h2>📊 Model Evaluation</h2>
+
+    <p>Each model is evaluated on the held-out test set using the following metrics:</p>
+    <ul>
+        <li><strong>Accuracy</strong> — overall percentage of correct predictions.</li>
+        <li><strong>Precision</strong> — of the students predicted "Placed", how many actually were.</li>
+        <li><strong>Recall</strong> — of the students actually placed, how many the model correctly identified.</li>
+        <li><strong>F1-score</strong> — harmonic mean of precision and recall.</li>
+    </ul>
+
+    <hr>
+
+    {% for name, metrics in results.items() %}
+
+    <h3>{{ name }}{% if name == best_model_name %} 🏆 (Best Model){% endif %}</h3>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Accuracy</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1-score</th>
+        </tr>
+        <tr>
+            <td>{{ "%.2f"|format(metrics.accuracy * 100) }}%</td>
+            <td>{{ "%.2f"|format(metrics.precision * 100) }}%</td>
+            <td>{{ "%.2f"|format(metrics.recall * 100) }}%</td>
+            <td>{{ "%.2f"|format(metrics.f1 * 100) }}%</td>
+        </tr>
+    </table>
+
+    <h4>Confusion Matrix</h4>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th></th>
+            <th>Predicted: Not Placed</th>
+            <th>Predicted: Placed</th>
+        </tr>
+        <tr>
+            <th>Actual: Not Placed</th>
+            <td>{{ metrics.confusion_matrix[0][0] }}</td>
+            <td>{{ metrics.confusion_matrix[0][1] }}</td>
+        </tr>
+        <tr>
+            <th>Actual: Placed</th>
+            <td>{{ metrics.confusion_matrix[1][0] }}</td>
+            <td>{{ metrics.confusion_matrix[1][1] }}</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    {% endfor %}
+
+</section>
+
+{% endblock %}

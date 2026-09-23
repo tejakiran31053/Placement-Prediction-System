@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container">
+
+    <h2>⚙️ Data Preprocessing</h2>
+
+    <p>
+        Before training any model, the raw dataset is cleaned and transformed
+        so that every feature is in a format the machine learning algorithms
+        can work with.
+    </p>
+
+    <hr>
+
+    <h3>1. Train / Test Split</h3>
+    <p>The dataset is split into training and testing sets (50 / 50, stratified on the target).</p>
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Set</th>
+            <th>Rows</th>
+            <th>Columns</th>
+        </tr>
+        <tr>
+            <td>Training</td>
+            <td>{{ train_shape[0] }}</td>
+            <td>{{ train_shape[1] }}</td>
+        </tr>
+        <tr>
+            <td>Testing</td>
+            <td>{{ test_shape[0] }}</td>
+            <td>{{ test_shape[1] }}</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h3>2. Missing Value Handling</h3>
+    <p>
+        Missing values in numerical columns are filled using the
+        <strong>median</strong> of the training set (via <code>SimpleImputer</code>),
+        with the same imputer then applied to the test set to avoid data leakage.
+    </p>
+
+    <h3>Numerical Features ({{ numerical_features|length }})</h3>
+    <p>{{ numerical_features|join(', ') }}</p>
+
+    <h3>Categorical Features ({{ categorical_features|length }})</h3>
+    <p>{{ categorical_features|join(', ') }}</p>
+
+    <hr>
+
+    <h3>3. Feature Scaling</h3>
+    <p>
+        All numerical features are standardized using <code>StandardScaler</code>
+        (zero mean, unit variance), fit only on the training set.
+    </p>
+
+    <hr>
+
+    <h3>4. Categorical Encoding</h3>
+
+    <h4>One-Hot Encoded Features</h4>
+    <p>Nominal categories with no inherent order:</p>
+    <p>{{ one_hot_features|join(', ') }}</p>
+
+    <h4>Ordinal Encoded Features</h4>
+    <p>Categories with a natural ranking:</p>
+    <p>{{ ordinal_features|join(', ') }}</p>
+
+    <hr>
+
+    <h3>Final Feature Set</h3>
+    <p>
+        After imputing, scaling and encoding, the training data has
+        <strong>{{ final_feature_count }}</strong> features ready to be fed
+        into the models.
+    </p>
+
+</section>
+
+{% endblock %}

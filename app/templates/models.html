@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container">
+
+    <h2>🤖 Machine Learning Models</h2>
+
+    <p>
+        Four classification models were trained on the preprocessed dataset
+        to predict <strong>PlacementStatus</strong>.
+    </p>
+
+    <hr>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Model</th>
+            <th>Description</th>
+            <th>Accuracy</th>
+        </tr>
+
+        {% for name, description in model_info.items() %}
+        <tr {% if name == best_model_name %}style="background-color:#e6ffe6;"{% endif %}>
+            <td><strong>{{ name }}</strong>{% if name == best_model_name %} 🏆{% endif %}</td>
+            <td>{{ description }}</td>
+            <td>{{ "%.2f"|format(results[name].accuracy * 100) }}%</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <hr>
+
+    <p>
+        See the <a href="/evaluation">Evaluation</a> page for detailed
+        precision / recall / F1 / confusion matrix metrics, or the
+        <a href="/comparison">Comparison</a> page for a side-by-side ranking.
+    </p>
+
+</section>
+
+{% endblock %}

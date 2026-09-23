@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container">
+
+    <h2>⚖️ Model Comparison</h2>
+
+    <p>All models ranked by test-set accuracy (highest first):</p>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Rank</th>
+            <th>Model</th>
+            <th>Accuracy</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1-score</th>
+        </tr>
+
+        {% for name, metrics in results.items() %}
+        <tr {% if name == best_model_name %}style="background-color:#e6ffe6;"{% endif %}>
+            <td>{{ loop.index }}</td>
+            <td><strong>{{ name }}</strong>{% if name == best_model_name %} 🏆{% endif %}</td>
+            <td>{{ "%.2f"|format(metrics.accuracy * 100) }}%</td>
+            <td>{{ "%.2f"|format(metrics.precision * 100) }}%</td>
+            <td>{{ "%.2f"|format(metrics.recall * 100) }}%</td>
+            <td>{{ "%.2f"|format(metrics.f1 * 100) }}%</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <hr>
+
+    <h3>Accuracy Comparison</h3>
+
+    {% for name, metrics in results.items() %}
+    <p>
+        {{ name }}
+        <br>
+        <span style="display:inline-block; background-color:#2c3e50; height:18px;
+                      width:{{ (metrics.accuracy * 400)|round(0, 'floor')|int }}px;">
+        </span>
+        {{ "%.2f"|format(metrics.accuracy * 100) }}%
+    </p>
+    {% endfor %}
+
+    <hr>
+
+    <p>
+        Based on test-set accuracy, <strong>{{ best_model_name }}</strong> is
+        the best-performing model on this dataset. Try it out on the
+        <a href="/prediction">Prediction</a> page.
+    </p>
+
+</section>
+
+{% endblock %}

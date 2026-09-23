@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="container">
+
+    <h2>🔮 Placement Prediction</h2>
+
+    <p>Fill in a student's details below to predict whether they will be placed.</p>
+
+    {% if error %}
+    <p style="color:red;"><strong>{{ error }}</strong></p>
+    {% endif %}
+
+    {% if prediction_result %}
+    <div style="padding:15px; border:2px solid {{ '#2ecc71' if prediction_result == 'Placed' else '#e74c3c' }};">
+        <h3>Prediction Result ({{ selected_model_name }})</h3>
+        <p style="font-size:22px;">
+            <strong>{{ prediction_result }}</strong>
+            {% if probability is not none %}
+                &nbsp;— Probability of Placement: <strong>{{ probability }}%</strong>
+            {% endif %}
+        </p>
+    </div>
+    <hr>
+    {% endif %}
+
+    <form method="POST" action="/prediction">
+
+        <h3>Model</h3>
+        <label for="model_choice">Choose a model:</label>
+        <select name="model_choice" id="model_choice">
+            {% for name in model_names %}
+            <option value="{{ name }}" {% if name == selected_model_name %}selected{% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+
+        <hr>
+
+        <h3>Student Profile</h3>
+
+        <table border="1" cellpadding="8">
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <select name="Gender">
+                        {% for option in dropdown_options['Gender'] %}
+                        <option value="{{ option }}" {% if form_values.get('Gender') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>City</td>
+                <td>
+                    <select name="City">
+                        {% for option in dropdown_options['City'] %}
+                        <option value="{{ option }}" {% if form_values.get('City') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>College Tier</td>
+                <td>
+                    <select name="CollegeTier">
+                        {% for option in dropdown_options['CollegeTier'] %}
+                        <option value="{{ option }}" {% if form_values.get('CollegeTier') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>Stream</td>
+                <td>
+                    <select name="Stream">
+                        {% for option in dropdown_options['Stream'] %}
+                        <option value="{{ option }}" {% if form_values.get('Stream') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Specialisation</td>
+                <td>
+                    <select name="Specialisation">
+                        {% for option in dropdown_options['Specialisation'] %}
+                        <option value="{{ option }}" {% if form_values.get('Specialisation') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>Hostel</td>
+                <td>
+                    <select name="Hostel">
+                        {% for option in dropdown_options['Hostel'] %}
+                        <option value="{{ option }}" {% if form_values.get('Hostel') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>History of Backlogs</td>
+                <td>
+                    <select name="HistoryOfBacklogs">
+                        {% for option in dropdown_options['HistoryOfBacklogs'] %}
+                        <option value="{{ option }}" {% if form_values.get('HistoryOfBacklogs') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>CGPA Tier</td>
+                <td>
+                    <select name="CGPA_Tier">
+                        {% for option in dropdown_options['CGPA_Tier'] %}
+                        <option value="{{ option }}" {% if form_values.get('CGPA_Tier') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>Semester-wise SGPA</h3>
+        <table border="1" cellpadding="8">
+            <tr>
+                {% for i in range(1, 9) %}
+                <th>Sem {{ i }}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for i in range(1, 9) %}
+                <td>
+                    <input type="number" step="0.01" min="0" max="10"
+                           name="SGPA_Sem{{ i }}"
+                           value="{{ form_values.get('SGPA_Sem' ~ i, 7.0) }}" required>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>Academic &amp; Test Scores</h3>
+
+        <table border="1" cellpadding="8">
+            <tr>
+                <td>CGPA (0-10)</td>
+                <td><input type="number" step="0.01" min="0" max="10" name="CGPA" value="{{ form_values.get('CGPA', 7.0) }}" required></td>
+                <td>Attendance % (0-100)</td>
+                <td><input type="number" step="0.1" min="0" max="100" name="AttendancePercent" value="{{ form_values.get('AttendancePercent', 75) }}" required></td>
+            </tr>
+            <tr>
+                <td>Aptitude Test Score (0-100)</td>
+                <td><input type="number" step="0.1" min="0" max="100" name="AptitudeTestScore" value="{{ form_values.get('AptitudeTestScore', 60) }}" required></td>
+                <td>Coding Test Score (0-100)</td>
+                <td><input type="number" step="0.1" min="0" max="100" name="CodingTestScore" value="{{ form_values.get('CodingTestScore', 50) }}" required></td>
+            </tr>
+            <tr>
+                <td>Soft Skills Rating (0-5)</td>
+                <td><input type="number" step="0.1" min="0" max="5" name="SoftSkillsRating" value="{{ form_values.get('SoftSkillsRating', 3.0) }}" required></td>
+                <td>Mock Interview Score (0-100)</td>
+                <td><input type="number" step="0.1" min="0" max="100" name="MockInterviewScore" value="{{ form_values.get('MockInterviewScore', 50) }}" required></td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h3>Activities &amp; Achievements</h3>
+
+        <table border="1" cellpadding="8">
+            <tr>
+                <td>Internships</td>
+                <td><input type="number" min="0" name="Internships" value="{{ form_values.get('Internships', 0) }}" required></td>
+                <td>Projects</td>
+                <td><input type="number" min="0" name="Projects" value="{{ form_values.get('Projects', 1) }}" required></td>
+            </tr>
+            <tr>
+                <td>Workshops</td>
+                <td><input type="number" min="0" name="Workshops" value="{{ form_values.get('Workshops', 0) }}" required></td>
+                <td>Certifications</td>
+                <td><input type="number" min="0" name="Certifications" value="{{ form_values.get('Certifications', 0) }}" required></td>
+            </tr>
+            <tr>
+                <td>Publications</td>
+                <td><input type="number" min="0" name="Publications" value="{{ form_values.get('Publications', 0) }}" required></td>
+                <td>Extra-Curricular (0 = No, 1 = Yes)</td>
+                <td>
+                    <select name="ExtraCurricular">
+                        <option value="0" {% if form_values.get('ExtraCurricular') == '0' %}selected{% endif %}>No</option>
+                        <option value="1" {% if form_values.get('ExtraCurricular') == '1' %}selected{% endif %}>Yes</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+
+        <button type="submit">Predict Placement</button>
+
+    </form>
+
+</section>
+
+{% endblock %}
