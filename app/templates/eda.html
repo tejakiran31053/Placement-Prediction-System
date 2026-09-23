@@ -1,43 +1,36 @@
 {% extends "base.html" %}
+
 {% block content %}
 
 <h2>Exploratory Data Analysis</h2>
-<br>
 
-<h3>CGPA Histogram</h3>
-<img src="{{ url_for('static', filename='charts/cgpa.png') }}" width="600">
-<p>Distribution of CGPA</p>
+<h3>1. Target Variable — Placement Status</h3>
+<img src="{{ url_for('static', filename='charts/placement_status.png') }}" width="600">
+<p>Distribution of students who were placed vs not placed.</p>
+<hr>
 
-<br>
-<hr/>
+<h3>2. CGPA Histogram</h3>
+<img src="{{ url_for('static', filename='charts/CGPA.png') }}" width="600">
+<p>Visualizing the distribution of CGPA across all students.</p>
+<hr>
 
-<h3>CGPA vs Placement StatusBox</h3>
-<img src="{{ url_for('static', filename='charts/Boxplot.png') }}" width="600">
-<p>Relation between CGPA and the Placement status</p>
-
-<hr/>
-
-<h3>CGPA Aptitude score</h3>
-<img src="{{ url_for('static', filename='charts/cgpa_aptitudescore_scatter.png') }}" width="600">
-<p>CGPA Aptitude Score </p>
-
-<hr/>
-
-<h3>Gender Distribution infor</h3>
+<h3>3. Gender Distribution</h3>
 <img src="{{ url_for('static', filename='charts/gender_distribution.png') }}" width="600">
-<p> Gender Distribution </p>
+<p>Proportion of male vs female students in the dataset.</p>
+<hr>
 
-<hr/>
-
-<h3>Heat Map</h3>
-<img src="{{ url_for('static', filename='charts/heatmap.png') }}" width="600">
-<p>Heat Map </p>
-
-<hr/>
-
-<h4>CGPA vs Placement StatusBox</h4>
+<h3>4. CGPA vs Aptitude Test Score</h3>
 <img src="{{ url_for('static', filename='charts/cgpa_aptitudescore_scatter.png') }}" width="600">
-<p>CGPA Aptitude Score </p>
+<p>Relationship between CGPA and Aptitude Test Score.</p>
+<hr>
 
+<h3>5. CGPA vs Placement Status</h3>
+<img src="{{ url_for('static', filename='charts/boxplot.png') }}" width="600">
+<p>Visualizing the relation between CGPA and Placement Status.</p>
+<hr>
+
+<h3>6. Correlation Heatmap</h3>
+<img src="{{ url_for('static', filename='charts/Heatmap.png') }}" width="600">
+<p>Correlation between CGPA, Aptitude Test Score and Placement Status.</p>
 
 {% endblock %}

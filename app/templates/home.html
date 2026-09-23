@@ -4,6 +4,51 @@
 
 <h2>Home Page</h2>
 
-<p>Welcome to the Placement Prediction System.</p>
+<p>
+    Welcome to the <strong>Placement Prediction System</strong> — a Machine
+    Learning project built with Flask that predicts whether a student will
+    be placed based on their academic performance, test scores and
+    profile details.
+</p>
+
+<h3>What this app covers</h3>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Page</th>
+        <th>What it shows</th>
+    </tr>
+    <tr>
+        <td>Dataset</td>
+        <td>Raw dataset shape, columns and a preview of the first few records.</td>
+    </tr>
+    <tr>
+        <td>EDA</td>
+        <td>Exploratory Data Analysis charts — distributions, correlations and relationships between features.</td>
+    </tr>
+    <tr>
+        <td>Preprocessing</td>
+        <td>How missing values, scaling and categorical encoding are handled before training.</td>
+    </tr>
+    <tr>
+        <td>Models</td>
+        <td>The machine learning models trained on the dataset: Logistic Regression, Decision Tree, Random Forest and Gradient Boosting.</td>
+    </tr>
+    <tr>
+        <td>Evaluation</td>
+        <td>Accuracy, precision, recall, F1-score and confusion matrix for each model.</td>
+    </tr>
+    <tr>
+        <td>Comparison</td>
+        <td>Side-by-side comparison of every model, ranked by accuracy.</td>
+    </tr>
+    <tr>
+        <td>Prediction</td>
+        <td>An interactive form to enter a student's details and get a live placement prediction.</td>
+    </tr>
+</table>
+
+<h3>Target Variable</h3>
+<p><strong>PlacementStatus</strong> — whether a student was placed (1) or not placed (0).</p>
 
 {% endblock %}

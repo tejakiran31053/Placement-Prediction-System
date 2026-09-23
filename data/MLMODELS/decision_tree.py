@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Add project root to path so imports work when run directly
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 import matplotlib.pyplot as plt
 
 from src.data.load_data import load_data
